@@ -9,11 +9,12 @@ class MarketMaker{
     private:
         int64_t inventory = 0;
         int64_t cash;
-        int32_t quoteSpread;
+        int64_t quoteSpread;
         uint32_t orderSize;
+        double inventorySkewFactor;
 
     public: 
-        MarketMaker(int64_t cash, int64_t quoteSpread, uint32_t orderSize);
+        MarketMaker(int64_t cash, int64_t quoteSpread, uint32_t orderSize, double inventorySkewFactor);
 
         int64_t calculateBidQuote(int64_t midPrice) const;
         int64_t calculateAskQuote(int64_t midPrice) const;

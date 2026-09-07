@@ -16,7 +16,8 @@ int main(){
     MarketMaker marketMaker(
         1000000, // initial cash
         4,       // quote spread
-        10       // order size
+        10,      // order size
+        0.1      //Skew Factor
     );
 
     FillModel fillModel(
@@ -29,7 +30,7 @@ int main(){
         1000000 // initial cash
     );
 
-    const int simulationSteps = 20;
+    const int simulationSteps = 100;
 
     for (int step = 0; step < simulationSteps; ++step)
     {
@@ -82,5 +83,6 @@ int main(){
     }
 
 
+    
     return 0;
 }
