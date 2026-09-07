@@ -3,9 +3,9 @@
 #include "market/market.hpp"
 #include "market/market_maker.hpp"
 #include "market/fill_model.hpp"
+#include "metrics/pnl_tracker.hpp"
 
-int main()
-{
+int main(){
     Market market(
         10000,   // mid price
         4,       // market spread
@@ -23,6 +23,10 @@ int main()
         0.30,    // buy fill probability
         0.30,    // sell fill probability
         73       // seed
+    );
+
+    PnLTracker pnlTracker(
+        1000000 // initial cash
     );
 
     const int simulationSteps = 20;
@@ -58,6 +62,9 @@ int main()
             );
         }
 
+        int64_t inventory = marketMaker.getInventory();
+        int64_t cash = marketMaker.getCash();
+
         std::cout
             << "Step: " << step
             << " | Mid: " << midPrice
@@ -65,12 +72,15 @@ int main()
             << " | Quotes: " << ourBid << "/" << ourAsk
             << " | BuyFill: " << buyFilled
             << " | SellFill: " << sellFilled
-            << " | Inventory: " << marketMaker.getInventory()
-            << " | Cash: " << marketMaker.getCash()
+            << " | Inventory: " << inventory
+            << " | Cash: " << cash
+            << " | AccountValue: " << pnlTracker.getAccountValue(cash, inventory, midPrice)
+            << " | PnL: " << pnlTracker.calculatePnL(cash, inventory, midPrice)
             << '\n';
 
         market.updatePrice();
     }
+
 
     return 0;
 }

@@ -11,6 +11,7 @@ add_executable(market_making_simulator
     src/market.cpp
     src/market_maker.cpp
     src/fill_model.cpp
+    src/pnl_tracker.cpp
 )
 
 target_include_directories(market_making_simulator
